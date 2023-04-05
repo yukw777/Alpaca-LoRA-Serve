@@ -25,11 +25,11 @@ This repository demonstrates Alpaca-LoRA as a Chatbot service with [Alpaca-LoRA]
 
 **1. Batch Generation Mode**: batch generation mode aggregates requests up to `batch_size`, and pass the prompts in the requests to the model. It waits the current requests are fully handled. For instance, with `batch_size=4`, if a user sends a request, that is under processing. While it is under processing, if other users are connected, up to 4 requests from the users are aggregated and processed as soon as the current one is done.
 
-**2. Streaming Mode**: streaming mode handles multiple requests in a interleaving way with threads. For instance, if there are two users (A and B) are connected, A's request is handled, and then B's request is handled, and then A's request is handled again.... This is because of the nature of streaming mode which generates and `yield` tokens in one by one manner. 
+**2. Streaming Mode**: streaming mode handles multiple requests in a interleaving way with threads. For instance, if there are two users (A and B) are connected, A's request is handled, and then B's request is handled, and then A's request is handled again.... This is because of the nature of streaming mode which generates and `yield` tokens in one by one manner.
 
 ### Context management
 
-- Alpaca-LoRA as a Chatbot Service manages context in two ways. First of all, it remembers(stores) every history of the conversations by default as in the following code snippet. `context_string` is set as ___"Below is a history of instructions that describe tasks, paired with an input that provides further context. Write a response that appropriately completes the request by remembering the conversation history."___ by default, but it could be set manually via the `Context` field on top of the screen. 
+- Alpaca-LoRA as a Chatbot Service manages context in two ways. First of all, it remembers(stores) every history of the conversations by default as in the following code snippet. `context_string` is set as ___"Below is a history of instructions that describe tasks, paired with an input that provides further context. Write a response that appropriately completes the request by remembering the conversation history."___ by default, but it could be set manually via the `Context` field on top of the screen.
   - additionally, there is a `Summarize` button in the middle (you need to expand the component labeled as ___"Helper Buttons"___). If you click this button, it automatically input ___"summarize our conversations so far in three sentences."___ as a prompt, and the resulting generated text will be inserted into the `Context` field. THen all the conversation history up to this point will be ignored. That means the conversation fresh restarts with the below code snippet except `context_string` will be filled up with the model generated text.
   - _NOTE: the only last 2,000 characters are kept, and this number can be configured in `constants.py`_
 
@@ -78,10 +78,9 @@ $ pip install -r requirements.txt
 
 2. Run Gradio application
 ```console
-$ BASE_URL=decapoda-research/llama-7b-hf
-$ FINETUNED_CKPT_URL=tloen/alpaca-lora-7b
+$ BASE_URL=/path/to/trained/alpaca
 
-$ python app.py --base_url $BASE_URL --ft_ckpt_url $FINETUNED_CKPT_URL --port 6006
+$ python app.py --model_name_or_path $BASE_URL --peft --load_in_8bit
 ```
 
 the following flags are supported
