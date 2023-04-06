@@ -46,10 +46,5 @@ def parse_args():
         default="configs/gen_config_summarization.yaml",
         type=str,
     )
-    parser.add_argument(
-        "--multi_gpu",
-        help="Enable multi gpu mode. This will force not to use Int8 but float16, so you need to check if your system has enough GPU memory",
-        action="store_true",
-    )
 
     return parser.parse_args()

@@ -103,7 +103,6 @@ options:
   --share               Create and share temporary endpoint (useful in Colab env)
   --gen_config_path GEN_CONFIG_PATH
                         path to GenerationConfig file used in batch mode
-  --multi_gpu           Enable multi gpu mode. This will force not to use Int8 but float16, so you need to check if your system has enough GPU memory
 ```
 
 ## Design figure
